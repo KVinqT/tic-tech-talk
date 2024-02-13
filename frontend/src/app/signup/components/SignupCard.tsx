@@ -25,13 +25,15 @@ import {
 interface UserData {
   name: string;
   password: string;
+  confirmPassword: string;
 }
-const LoginCard = () => {
+const SignupCard = () => {
   const router = useRouter();
   const form = useForm({
     defaultValues: {
       name: "",
       password: "",
+      confirmPassword: "",
     },
   });
   const { register, handleSubmit } = form;
@@ -52,12 +54,7 @@ const LoginCard = () => {
       <div className="p-1">
         <Card className="w-[400px] h-full">
           <CardHeader>
-            <CardTitle className="text-primary text-2xl">
-              Please Login
-            </CardTitle>
-            <CardDescription className="text-sm">
-              Login to Tic Tech Talk!
-            </CardDescription>
+            <CardTitle className="text-primary text-2xl">Signing Up</CardTitle>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -120,16 +117,39 @@ const LoginCard = () => {
                       )}
                     />
                   </div>
+                  <div className="flex flex-col space-y-1.5">
+                    <FormField
+                      control={form.control}
+                      name="confirmPassword"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Confirm Password</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter your password"
+                              {...field}
+                              {...register("confirmPassword", {
+                                required: {
+                                  value: true,
+                                  message: "please fill your password !",
+                                },
+                                minLength: {
+                                  value: 3,
+                                  message:
+                                    "password must be at least 3 characters",
+                                },
+                              })}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </div>
                 <Button
-                  className="w-full bg-primary text-white mt-5 rounded-xl"
                   type="submit"
-                >
-                  Login
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full rounded-xl border-primary mt-5"
+                  className="w-full bg-primary text-white mt-5 rounded-xl"
                 >
                   Sign Up
                 </Button>
@@ -142,4 +162,4 @@ const LoginCard = () => {
   );
 };
 
-export default LoginCard;
+export default SignupCard;

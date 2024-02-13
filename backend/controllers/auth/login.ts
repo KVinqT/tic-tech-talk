@@ -4,6 +4,8 @@ const prisma = new PrismaClient();
 
 export const login_user = async (req: Request, res: Response) => {
   const { name, password } = req.body;
+  const reqUrl = req.body;
+  console.log(reqUrl);
   const validUser = await prisma.user.findFirst({
     where: {
       name,
